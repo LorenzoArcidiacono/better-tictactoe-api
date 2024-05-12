@@ -15,7 +15,7 @@ export class InfoService {
   ): Promise<BaseResponse> {
     let data = {};
 
-    // check which interface implements
+    // check which class implements
     if (rawData.age && rawData.birthdate) {
       data = plainToClass(UpdateAllInfoRequest, rawData);
     } else {

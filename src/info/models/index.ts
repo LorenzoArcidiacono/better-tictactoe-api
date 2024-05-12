@@ -1,4 +1,3 @@
-import { Transform } from 'class-transformer';
 import {
   UpdateInfoRequest as UpdateInfoRequestInterface,
   UpdateAllInfoRequest as UpdateAllInfoRequestInterface,
@@ -11,11 +10,8 @@ import {
   Max,
   IsBoolean,
   IsInt,
-  IsOptional,
-  Validate,
   IsDateString,
   ValidateIf,
-  validate,
   IsDefined,
   MaxLength,
 } from 'class-validator';
@@ -58,5 +54,5 @@ export class UpdateAllInfoRequest implements UpdateAllInfoRequestInterface {
     return !(years === o.age);
   })
   @IsDefined({ message: 'Age must be coherent with birth date' })
-  protected readonly checkAge: undefined;
+  readonly checkAge: undefined;
 }
