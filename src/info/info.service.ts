@@ -13,10 +13,17 @@ export class InfoService {
   async validateInfo(
     rawData: UpdateAllInfoRequestInterface,
   ): Promise<BaseResponse> {
+    // class validation methods
+    const isUpdateAllInfoRequest = (
+      value: UpdateAllInfoRequestInterface,
+    ): value is UpdateAllInfoRequestInterface => {
+      return !!value?.name && !!value?.age && !!value?.birthdate;
+    };
+
     let data = {};
 
     // check which class implements
-    if (rawData.age && rawData.birthdate) {
+    if (isUpdateAllInfoRequest(rawData)) {
       data = plainToClass(UpdateAllInfoRequest, rawData);
     } else {
       data = plainToClass(UpdateInfoRequest, rawData);
