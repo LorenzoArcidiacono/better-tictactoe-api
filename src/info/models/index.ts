@@ -1,9 +1,54 @@
+import { Transform } from 'class-transformer';
 import { UpdateInfoRequest as UpdateInfoRequestInterface } from '../interfaces';
-import { IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  MinLength,
+  Min,
+  Max,
+  IsBoolean,
+  IsInt,
+  IsOptional,
+  Validate,
+  IsDateString,
+  ValidateIf,
+  validate,
+  IsDefined,
+  MaxLength,
+} from 'class-validator';
+import * as moment from 'moment';
 
 export class UpdateInfoRequest implements UpdateInfoRequestInterface {
   @IsNotEmpty()
   @IsString()
-  @MinLength(3)
+  @MinLength(5)
+  @MaxLength(50)
   name: string;
+
+  // @IsOptional()
+  @IsNotEmpty()
+  @IsInt()
+  @Min(1)
+  @Max(150)
+  age: number;
+
+  @ValidateIf((o) => o.age >= 18)
+  @IsNotEmpty()
+  @IsBoolean()
+  married?: boolean;
+
+  // @IsOptional()
+  @IsNotEmpty()
+  @IsDateString()
+  birthdate: string;
+
+  // Can't use custom validators because comparison between two values
+  @ValidateIf((o) => {
+    const date = moment(o.birthdate);
+    const now = moment();
+    const years = now.diff(date, 'year');
+    return !(years === o.age);
+  })
+  @IsDefined({ message: 'Age must be coherent with birth date' })
+  protected readonly checkAge: undefined;
 }
