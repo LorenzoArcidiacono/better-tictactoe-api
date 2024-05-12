@@ -1,5 +1,8 @@
 import { Transform } from 'class-transformer';
-import { UpdateInfoRequest as UpdateInfoRequestInterface } from '../interfaces';
+import {
+  UpdateInfoRequest as UpdateInfoRequestInterface,
+  UpdateAllInfoRequest as UpdateAllInfoRequestInterface,
+} from '../interfaces';
 import {
   IsNotEmpty,
   IsString,
@@ -21,11 +24,17 @@ import * as moment from 'moment';
 export class UpdateInfoRequest implements UpdateInfoRequestInterface {
   @IsNotEmpty()
   @IsString()
+  @MinLength(1)
+  name: string;
+}
+
+export class UpdateAllInfoRequest implements UpdateAllInfoRequestInterface {
+  @IsNotEmpty()
+  @IsString()
   @MinLength(5)
   @MaxLength(50)
   name: string;
 
-  // @IsOptional()
   @IsNotEmpty()
   @IsInt()
   @Min(1)
@@ -37,7 +46,6 @@ export class UpdateInfoRequest implements UpdateInfoRequestInterface {
   @IsBoolean()
   married?: boolean;
 
-  // @IsOptional()
   @IsNotEmpty()
   @IsDateString()
   birthdate: string;
