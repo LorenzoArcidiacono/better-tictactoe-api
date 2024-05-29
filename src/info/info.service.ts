@@ -7,9 +7,29 @@ import {
 } from './interfaces';
 import { BaseResponse } from '../interfaces';
 import { UpdateAllInfoRequest, UpdateInfoRequest } from './models';
+import { Info } from './info.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class InfoService {
+  constructor(
+    @InjectRepository(Info)
+    private infosRepository: Repository<Info>,
+  ) {}
+
+  findAll(): Promise<Info[]> {
+    return this.infosRepository.find();
+  }
+
+  findOne(id: number): Promise<Info | null> {
+    return this.infosRepository.findOneBy({ id });
+  }
+
+  create(name: string): Promise<Info> {
+    return this.infosRepository.save({ name: name });
+  }
+
   async validateInfo(
     rawData: UpdateAllInfoRequestInterface,
   ): Promise<BaseResponse> {
