@@ -14,6 +14,7 @@ import {
   ValidateIf,
   IsDefined,
   MaxLength,
+  IsOptional,
 } from 'class-validator';
 import * as moment from 'moment';
 
@@ -55,4 +56,37 @@ export class UpdateAllInfoRequest implements UpdateAllInfoRequestInterface {
   })
   @IsDefined({ message: 'Age must be coherent with birth date' })
   readonly checkAge: undefined;
+}
+
+export class CreateInfo {
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  surname?: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  fiscalcode?: string;
+}
+
+export class UpdateInfo {
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  name?: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  surname?: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  fiscalcode?: string;
 }

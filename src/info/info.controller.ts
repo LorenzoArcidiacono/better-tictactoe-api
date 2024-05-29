@@ -1,8 +1,17 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Patch,
+  NotFoundException,
+} from '@nestjs/common';
 import { InfoService } from './info.service';
-import { UpdateInfoRequest, UpdateAllInfoRequest } from './interfaces';
+import { UpdateAllInfoRequest } from './interfaces';
 import { BaseResponse } from '../interfaces';
 import { Info } from './info.entity';
+import { CreateInfo, UpdateInfo } from './models';
 
 @Controller('info')
 export class InfoController {
@@ -13,9 +22,28 @@ export class InfoController {
     return this.infoService.findAll();
   }
 
+  @Get(':id')
+  async get(@Param('id') id: string): Promise<Info> {
+    const info = await this.infoService.findOne(parseInt(id));
+    if (!info) {
+      throw new NotFoundException(`User ${id} not found`);
+    }
+    return info;
+  }
+
   @Post('')
-  create(@Body() body: { name: string }) {
-    return this.infoService.create(body.name);
+  create(@Body() body: CreateInfo) {
+    return this.infoService.create(body);
+  }
+
+  @Patch(':id')
+  updateInfo(@Param('id') id: string, @Body() body: UpdateInfo) {
+    return this.infoService.update(parseInt(id), body);
+  }
+
+  @Get(':id/invoice/')
+  invoice(@Param('id') id: string) {
+    return this.infoService.invoice(parseInt(id));
   }
 
   @Post('/validate')
@@ -23,5 +51,3 @@ export class InfoController {
     return this.infoService.validateInfo(bodyRequest);
   }
 }
-
-

@@ -15,7 +15,7 @@ import { Info } from './info/info.entity';
       database: 'test',
       entities: [Info],
       synchronize: false,
-    }),
+    })
   ],
   controllers: [],
   providers: [],

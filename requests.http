@@ -1,0 +1,29 @@
+### Get all info
+GET http://localhost:3001/info
+
+### Get one info
+GET http://localhost:3001/info/10
+
+
+### Add a use
+
+POST http://localhost:3001/info
+Content-Type: application/json
+
+{
+    "name":"Lorenzo"
+}
+
+### UPDATE A USER
+
+PATCH http://localhost:3001/info/13
+Content-Type: application/json
+
+{
+    "surname": "Arcidiacono",
+    "fiscalcode":"ANDR123ABC124"
+}
+
+### GET INVOICE
+
+GET http://localhost:3001/info/13/invoice

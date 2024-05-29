@@ -7,4 +7,10 @@ export class Info {
 
   @Column()
   name: string;
+
+  @Column()
+  surname?: string;
+
+  @Column()
+  fiscalcode?: string;
 }
