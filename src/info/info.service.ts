@@ -59,7 +59,11 @@ export class InfoService {
   async invoice(id: number): Promise<boolean> {
     const info = await this.findOne(id);
 
-    if (!info || !info.surname || !info.fiscalcode) {
+    if (!info) {
+      throw new NotFoundException(`Info with id:${id} not found`);
+    }
+
+    if ( !info.surname || !info.fiscalcode) {
       return false;
     }
 
